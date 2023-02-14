@@ -39,11 +39,7 @@ public:
 	UPROPERTY(VisibleAnywhere)
 		class UCameraComponent* Camera;
 
-	UPROPERTY(EditAnywhere, Category = "Widget")
-		TSubclassOf<UUserWidget> WidgetClass;
-
-	UPROPERTY(VisibleAnywhere)
-		class UMainCharacterWidget* PlayerUI;
+	
 
 	UPROPERTY(VisibleAnywhere)
 		APlayerController* playerController;
@@ -57,4 +53,6 @@ public:
 	UPROPERTY(VisibleAnywhere)
 		class AInteractionObject* InteractionObject;
 
+	UPROPERTY(VisibleAnywhere)
+		class AMainPlayerController* MyPlayerController;
 };

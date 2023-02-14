@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
+#include "MainCharacterWidget.h"
 #include "MainPlayerController.generated.h"
 
 /**
@@ -13,5 +14,18 @@ UCLASS()
 class UE4_TEST001_API AMainPlayerController : public APlayerController
 {
 	GENERATED_BODY()
-	
+
+		AMainPlayerController();
+protected:
+	virtual void BeginPlay() override;
+
+public:
+	UPROPERTY(EditAnywhere, Category = "Widget")
+		TSubclassOf<UMainCharacterWidget> WidgetClass;
+
+	UPROPERTY(VisibleAnywhere)
+		class UMainCharacterWidget* PlayerUI;
+
+public:
+	UMainCharacterWidget* GetPlayerUI();
 };

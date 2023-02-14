@@ -5,14 +5,15 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
-#include "Components/WidgetComponent.h"
-#include "MainCharacterWidget.h"
 #include "Kismet/GameplayStatics.h"
 #include "Engine/World.h"
 #include "DrawDebugHelpers.h"
 #include "GameFramework/Actor.h"
 #include "InteractionObject.h"
 #include "TimerManager.h"
+#include "MainPlayerController.h"
+#include "Components/WidgetComponent.h"
+#include "MainCharacterWidget.h"
 
 // Sets default values
 AMainCharacter::AMainCharacter()
@@ -46,11 +47,7 @@ AMainCharacter::AMainCharacter()
 		GetMesh()->SetAnimInstanceClass(AnimInstance.Class);
 	}
 
-	/*static ConstructorHelpers::FClassFinder<UUserWidget> PUI(TEXT("WidgetBlueprint'/Game/Blueprints/CPPBlueprints/WBP_MainCharacter_2.WBP_MainCharacter_2_C'"));
-	if (PUI.Succeeded())
-	{
-		WidgetClass = PUI.Class;
-	}*/
+	MyPlayerController = Cast<AMainPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
 
 }
 
@@ -62,15 +59,7 @@ void AMainCharacter::BeginPlay()
 	const FVector2D ViewportSize = FVector2D(GEngine->GameViewport->Viewport->GetSizeXY());
 	ScreenAimPos = FVector2D(ViewportSize.X / 2, ViewportSize.Y / 2);
 	InteractionRange = 2000.f;
-	if (WidgetClass != nullptr)
-	{
-		PlayerUI = Cast<UMainCharacterWidget>(CreateWidget(GetWorld(), WidgetClass));
-		if (PlayerUI != nullptr)
-		{
-			PlayerUI->GetPressFKey()->SetVisibility(ESlateVisibility::Hidden);
-			PlayerUI->AddToViewport();
-		}
-	}
+	
 }
 
 // Called every frame
@@ -116,7 +105,7 @@ void AMainCharacter::Tick(float DeltaTime)
 		if (InteractionObject)
 		{
 			InteractionObject->StartHighlight();
-			PlayerUI->GetPressFKey()->SetVisibility(ESlateVisibility::Visible);
+			MyPlayerController->GetPlayerUI()->GetPressFKey()->SetVisibility(ESlateVisibility::Visible);
 		}
 	}
 	else
@@ -125,7 +114,7 @@ void AMainCharacter::Tick(float DeltaTime)
 		{
 			InteractionObject->EndHighlight();
 			InteractionObject = nullptr;
-			PlayerUI->GetPressFKey()->SetVisibility(ESlateVisibility::Hidden);
+			MyPlayerController->GetPlayerUI()->GetPressFKey()->SetVisibility(ESlateVisibility::Hidden);
 		}
 	}
 
