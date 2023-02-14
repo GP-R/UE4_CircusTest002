@@ -46,11 +46,11 @@ AMainCharacter::AMainCharacter()
 		GetMesh()->SetAnimInstanceClass(AnimInstance.Class);
 	}
 
-	static ConstructorHelpers::FClassFinder<UUserWidget> PUI(TEXT("WidgetBlueprint'/Game/Blueprints/CPPBlueprints/WBP_MainCharacter.WBP_MainCharacter_C'"));
+	/*static ConstructorHelpers::FClassFinder<UUserWidget> PUI(TEXT("WidgetBlueprint'/Game/Blueprints/CPPBlueprints/WBP_MainCharacter_2.WBP_MainCharacter_2_C'"));
 	if (PUI.Succeeded())
 	{
 		WidgetClass = PUI.Class;
-	}
+	}*/
 
 }
 
