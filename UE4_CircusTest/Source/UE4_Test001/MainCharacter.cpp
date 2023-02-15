@@ -47,7 +47,6 @@ AMainCharacter::AMainCharacter()
 		GetMesh()->SetAnimInstanceClass(AnimInstance.Class);
 	}
 
-	MyPlayerController = Cast<AMainPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
 
 }
 
@@ -55,7 +54,7 @@ AMainCharacter::AMainCharacter()
 void AMainCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	playerController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	MyPlayerController = Cast<AMainPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
 	const FVector2D ViewportSize = FVector2D(GEngine->GameViewport->Viewport->GetSizeXY());
 	ScreenAimPos = FVector2D(ViewportSize.X / 2, ViewportSize.Y / 2);
 	InteractionRange = 2000.f;
@@ -66,10 +65,18 @@ void AMainCharacter::BeginPlay()
 void AMainCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	MovingAim();
+	
 
+}
+
+void AMainCharacter::MovingAim()
+{
 	FVector OutWorldLocation;
 	FVector OutWorldDirection;
-	bool bAim = playerController->DeprojectScreenPositionToWorld(ScreenAimPos.X, ScreenAimPos.Y, OutWorldLocation, OutWorldDirection);
+	if(this != MyPlayerController->GetPawn())
+		return;
+	bool bAim = MyPlayerController->DeprojectScreenPositionToWorld(ScreenAimPos.X, ScreenAimPos.Y, OutWorldLocation, OutWorldDirection);
 	FHitResult HitResult;
 	FCollisionQueryParams Params(NAME_None, false, this);
 	if (!bAim)
@@ -95,11 +102,6 @@ void AMainCharacter::Tick(float DeltaTime)
 
 	if (bHitResult) // 상호작용하는 오브젝트와 에임이 맞았을경우
 	{
-		//delegate 해서 이벤트로하면 더 효율이 좋을듯
-		//hit된 액터 스스로 자기가 맞았다는걸 인식하고 하이라이트
-		//F키를 누르면
-		//TODO
-		//InteractionObject cpp하나 만들어서 가면이나 사다리 블루프린트들이 상속을받음
 		//
 		InteractionObject = Cast<AInteractionObject>(HitResult.Actor);
 		if (InteractionObject)
@@ -117,7 +119,6 @@ void AMainCharacter::Tick(float DeltaTime)
 			MyPlayerController->GetPlayerUI()->GetPressFKey()->SetVisibility(ESlateVisibility::Hidden);
 		}
 	}
-
 }
 
 

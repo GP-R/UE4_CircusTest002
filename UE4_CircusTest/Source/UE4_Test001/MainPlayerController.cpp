@@ -13,6 +13,13 @@ AMainPlayerController::AMainPlayerController()
 		WidgetClass = PUI.Class;
 	}
 
+	static ConstructorHelpers::FClassFinder<UUserWidget> SSUI(TEXT("WidgetBlueprint'/Game/Blueprints/CPPBlueprints/WBP_SelectShaco.WBP_SelectShaco_C'"));
+	if (SSUI.Succeeded())
+	{
+		SelectUIClass = SSUI.Class;
+
+	}
+
 }
 
 void AMainPlayerController::BeginPlay()
@@ -24,6 +31,16 @@ void AMainPlayerController::BeginPlay()
 		{
 			PlayerUI->GetPressFKey()->SetVisibility(ESlateVisibility::Hidden);
 			PlayerUI->AddToViewport();
+			
+		}
+	}
+	if (SelectUIClass != nullptr)
+	{
+		SelectShacoUI = Cast<UUserWidget>(CreateWidget(this, SelectUIClass));
+		if (SelectShacoUI != nullptr)
+		{
+			SelectShacoUI->SetVisibility(ESlateVisibility::Hidden);
+			SelectShacoUI->AddToViewport();
 		}
 	}
 }
@@ -31,4 +48,14 @@ void AMainPlayerController::BeginPlay()
 UMainCharacterWidget* AMainPlayerController::GetPlayerUI()
 {
 	return PlayerUI;
+}
+
+void AMainPlayerController::HidePlayerUI()
+{
+	PlayerUI->SetVisibility(ESlateVisibility::Hidden);
+}
+
+void AMainPlayerController::VisiblePlayerUI()
+{
+	PlayerUI->SetVisibility(ESlateVisibility::Visible);
 }

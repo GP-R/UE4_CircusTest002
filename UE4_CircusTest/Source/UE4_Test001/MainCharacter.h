@@ -32,6 +32,10 @@ public:
 	void LookUp(float Value);
 	void Interaction();
 
+private:
+
+	void MovingAim();
+
 public:
 	UPROPERTY(VisibleAnywhere)
 		class USpringArmComponent* SpringArm;
