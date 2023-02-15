@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
 #include "MainCharacterWidget.h"
+#include "Components/WidgetComponent.h"
 #include "MainPlayerController.generated.h"
 
 /**

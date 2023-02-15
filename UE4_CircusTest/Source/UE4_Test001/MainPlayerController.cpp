@@ -7,18 +7,18 @@
 
 AMainPlayerController::AMainPlayerController()
 {
-	static ConstructorHelpers::FClassFinder<UUserWidget> PUI(TEXT("WidgetBlueprint'/Game/Blueprints/CPPBlueprints/WBP_MainCharacter_2.WBP_MainCharacter_2_C'"));
+	static ConstructorHelpers::FClassFinder<UMainCharacterWidget> PUI(TEXT("WidgetBlueprint'/Game/Blueprints/CPPBlueprints/WBP_MainCharacter_2.WBP_MainCharacter_2_C'"));
 	if (PUI.Succeeded())
 	{
 		WidgetClass = PUI.Class;
 	}
 
-	static ConstructorHelpers::FClassFinder<UUserWidget> SSUI(TEXT("WidgetBlueprint'/Game/Blueprints/CPPBlueprints/WBP_SelectShaco.WBP_SelectShaco_C'"));
+	/*static ConstructorHelpers::FClassFinder<UUserWidget> SSUI(TEXT("WidgetBlueprint'/Game/Blueprints/CPPBlueprints/WBP_SelectShaco.WBP_SelectShaco_C'"));
 	if (SSUI.Succeeded())
 	{
 		SelectUIClass = SSUI.Class;
 
-	}
+	}*/
 
 }
 
