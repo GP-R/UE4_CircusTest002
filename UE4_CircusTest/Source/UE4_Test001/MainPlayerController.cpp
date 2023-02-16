@@ -8,18 +8,19 @@
 AMainPlayerController::AMainPlayerController()
 {
 	static ConstructorHelpers::FClassFinder<UMainCharacterWidget> PUI(TEXT("WidgetBlueprint'/Game/Blueprints/CPPBlueprints/WBP_MainCharacter_2.WBP_MainCharacter_2_C'"));
+	//static ConstructorHelpers::FClassFinder<UUserWidget> SIBAL_WHY (TEXT("WidgetBlueprint'/Game/Blueprints/CPPBlueprints/WBP_SelectShaco.WBP_SelectShaco_C'"));
+
 	if (PUI.Succeeded())
 	{
 		WidgetClass = PUI.Class;
 	}
-
-	/*static ConstructorHelpers::FClassFinder<UUserWidget> SSUI(TEXT("WidgetBlueprint'/Game/Blueprints/CPPBlueprints/WBP_SelectShaco.WBP_SelectShaco_C'"));
-	if (SSUI.Succeeded())
+	//static ConstructorHelpers::FClassFinder<UUserWidget> SSUI(TEXT("WidgetBlueprint'/Game/Blueprints/CPPBlueprints/WBP_SelectShaco.WBP_SelectShaco_C'"));
+	/*if (SIBAL_WHY.Succeeded())
 	{
-		SelectUIClass = SSUI.Class;
+		SelectUIClass = SIBAL_WHY.Class;
 
 	}*/
-
+	
 }
 
 void AMainPlayerController::BeginPlay()
@@ -31,10 +32,10 @@ void AMainPlayerController::BeginPlay()
 		{
 			PlayerUI->GetPressFKey()->SetVisibility(ESlateVisibility::Hidden);
 			PlayerUI->AddToViewport();
-			
+
 		}
 	}
-	if (SelectUIClass != nullptr)
+	/*if (SelectUIClass != nullptr)
 	{
 		SelectShacoUI = Cast<UUserWidget>(CreateWidget(this, SelectUIClass));
 		if (SelectShacoUI != nullptr)
@@ -42,7 +43,7 @@ void AMainPlayerController::BeginPlay()
 			SelectShacoUI->SetVisibility(ESlateVisibility::Hidden);
 			SelectShacoUI->AddToViewport();
 		}
-	}
+	}*/
 }
 
 UMainCharacterWidget* AMainPlayerController::GetPlayerUI()

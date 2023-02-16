@@ -27,11 +27,6 @@ public:
 	UPROPERTY(VisibleAnywhere)
 		class UMainCharacterWidget* PlayerUI;
 
-	UPROPERTY(EditAnywhere, Category = "Widget")
-		TSubclassOf<UUserWidget> SelectUIClass;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-		UUserWidget* SelectShacoUI;
 public:
 	UMainCharacterWidget* GetPlayerUI();
 
