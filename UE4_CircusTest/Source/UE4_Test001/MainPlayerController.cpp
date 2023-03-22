@@ -3,31 +3,33 @@
 
 #include "MainPlayerController.h"
 #include "Components/WidgetComponent.h"
+#include "UObject/ConstructorHelpers.h"
 #include "MainCharacterWidget.h"
+#include "Blueprint/UserWidget.h"
 
 AMainPlayerController::AMainPlayerController()
 {
-	static ConstructorHelpers::FClassFinder<UMainCharacterWidget> PUI(TEXT("WidgetBlueprint'/Game/Blueprints/CPPBlueprints/WBP_MainCharacter_2.WBP_MainCharacter_2_C'"));
-	//static ConstructorHelpers::FClassFinder<UUserWidget> SIBAL_WHY (TEXT("WidgetBlueprint'/Game/Blueprints/CPPBlueprints/WBP_SelectShaco.WBP_SelectShaco_C'"));
+	static ConstructorHelpers::FClassFinder<UMainCharacterWidget> PUI(TEXT("WidgetBlueprint'/Game/Blueprints/Widget/WBP_MainLv.WBP_MainLv_C'"));
 
 	if (PUI.Succeeded())
 	{
-		WidgetClass = PUI.Class;
+		MainLvWidgetClass = PUI.Class;
 	}
-	//static ConstructorHelpers::FClassFinder<UUserWidget> SSUI(TEXT("WidgetBlueprint'/Game/Blueprints/CPPBlueprints/WBP_SelectShaco.WBP_SelectShaco_C'"));
-	/*if (SIBAL_WHY.Succeeded())
-	{
-		SelectUIClass = SIBAL_WHY.Class;
 
-	}*/
+	static ConstructorHelpers::FClassFinder<UUserWidget> SMUI(TEXT("WidgetBlueprint'/Game/Blueprints/Widget/WBP_SelectMask.WBP_SelectMask_C'"));
+	if (SMUI.Succeeded())
+	{
+		SelectMaskWidgetClass = SMUI.Class;
+
+	}
 	
 }
 
 void AMainPlayerController::BeginPlay()
 {
-	if (WidgetClass != nullptr)
+	if (MainLvWidgetClass != nullptr)
 	{
-		PlayerUI = Cast<UMainCharacterWidget>(CreateWidget(this, WidgetClass));
+		PlayerUI = Cast<UMainCharacterWidget>(CreateWidget(this, MainLvWidgetClass));
 		if (PlayerUI != nullptr)
 		{
 			PlayerUI->GetPressFKey()->SetVisibility(ESlateVisibility::Hidden);
@@ -35,15 +37,15 @@ void AMainPlayerController::BeginPlay()
 
 		}
 	}
-	/*if (SelectUIClass != nullptr)
+	if (SelectMaskWidgetClass != nullptr)
 	{
-		SelectShacoUI = Cast<UUserWidget>(CreateWidget(this, SelectUIClass));
-		if (SelectShacoUI != nullptr)
+		SelectMaskUI = Cast<UUserWidget>(CreateWidget(this, SelectMaskWidgetClass));
+		if (SelectMaskUI != nullptr)
 		{
-			SelectShacoUI->SetVisibility(ESlateVisibility::Hidden);
-			SelectShacoUI->AddToViewport();
+			SelectMaskUI->SetVisibility(ESlateVisibility::Hidden);
+			SelectMaskUI->AddToViewport();
 		}
-	}*/
+	}
 }
 
 UMainCharacterWidget* AMainPlayerController::GetPlayerUI()

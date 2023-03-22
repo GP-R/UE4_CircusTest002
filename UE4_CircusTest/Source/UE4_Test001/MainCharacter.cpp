@@ -33,7 +33,7 @@ AMainCharacter::AMainCharacter()
 		FVector(0.f, 0.f, -88.f), FRotator(0.f, -90.f, 0.f));
 
 
-	static ConstructorHelpers::FObjectFinder<USkeletalMesh> SM(TEXT("SkeletalMesh'/Game/Mannequin/Character/Mesh/SK_Mannequin.SK_Mannequin'"));
+	static ConstructorHelpers::FObjectFinder<USkeletalMesh> SM(TEXT("SkeletalMesh'/Game/Resources/TestAsset/Mannequin/Character/Mesh/SK_Mannequin.SK_Mannequin'"));
 	if (SM.Succeeded())
 	{
 		GetMesh()->SetSkeletalMesh(SM.Object);
@@ -41,7 +41,7 @@ AMainCharacter::AMainCharacter()
 
 
 	GetMesh()->SetAnimationMode(EAnimationMode::AnimationBlueprint);
-	static ConstructorHelpers::FClassFinder<UAnimInstance> AnimInstance(TEXT("AnimBlueprint'/Game/Blueprints/CPPBlueprints/ABP_MainCharacter.ABP_MainCharacter_C'"));
+	static ConstructorHelpers::FClassFinder<UAnimInstance> AnimInstance(TEXT("AnimBlueprint'/Game/Blueprints/Pawn/ABP_MainCharacter.ABP_MainCharacter_C'"));
 	if (AnimInstance.Succeeded())
 	{
 		GetMesh()->SetAnimInstanceClass(AnimInstance.Class);
@@ -57,7 +57,7 @@ void AMainCharacter::BeginPlay()
 	MyPlayerController = Cast<AMainPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
 	const FVector2D ViewportSize = FVector2D(GEngine->GameViewport->Viewport->GetSizeXY());
 	ScreenAimPos = FVector2D(ViewportSize.X / 2, ViewportSize.Y / 2);
-	InteractionRange = 2000.f;
+	InteractionRange = 300.f;
 	
 }
 

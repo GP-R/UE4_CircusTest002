@@ -4,8 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
-#include "MainCharacterWidget.h"
-#include "Components/WidgetComponent.h"
 #include "MainPlayerController.generated.h"
 
 /**
@@ -21,14 +19,19 @@ protected:
 	virtual void BeginPlay() override;
 
 public:
-	UPROPERTY(EditAnywhere, Category = "Widget")
-		TSubclassOf<UMainCharacterWidget> WidgetClass;
+	UPROPERTY(VisibleAnywhere, Category = "Widget")
+		TSubclassOf<class UMainCharacterWidget> MainLvWidgetClass;
 
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere, Category = "Widget")
+		TSubclassOf<class UUserWidget> SelectMaskWidgetClass;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Widget", Meta = (AllowPrivateAccess = true))
 		class UMainCharacterWidget* PlayerUI;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Widget", Meta = (AllowPrivateAccess = true))
+		class UUserWidget* SelectMaskUI;
 public:
-	UMainCharacterWidget* GetPlayerUI();
+	class UMainCharacterWidget* GetPlayerUI();
 
 	UFUNCTION(BlueprintCallable)
 		void HidePlayerUI();
